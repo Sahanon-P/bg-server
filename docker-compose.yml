@@ -1,0 +1,28 @@
+version: "3"
+services: 
+  bg-server:
+    image: pazcalb/bg-server
+    build: .
+    ports:
+      - "3335:3335"
+    environment:
+      DATABASE_URL: postgresql://postgres:123@postgres:5432/bg?schema=public
+    depends_on:
+      - postgres
+    networks:
+      - bg
+  postgres:
+    image: postgres
+    ports:
+      - 5438:5432
+    volumes:
+      - ./postgres-data:/var/lib/postgresql/data
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: 123
+      POSTGRES_DB: bg
+    networks:
+      - bg
+
+networks:
+  bg:

@@ -1,0 +1,48 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Boardgames{
+  id String @id()
+  name String 
+  image String 
+  thumbnail String 
+  maxplayers Int
+  minplayers Int 
+  minplaytime Int 
+  maxplaytime Int 
+  description String 
+  yearpublished String 
+  rating Int?
+}
+
+model User {
+  id String @id @default(uuid())
+  email String @unique()
+  hash String 
+  username String 
+}
+
+model UserRating {
+  id String @id @default(uuid())
+  userId String 
+  boardGameId String
+  rating Int
+}
+
+model Comment {
+  id String @id @default(uuid())
+  userId String 
+  boardGameId String
+  username String
+  comment String
+}
+
